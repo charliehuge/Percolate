@@ -14,6 +14,8 @@ namespace DerelictComputer
             Edit
         }
 
+        private const double DoubleClickTime = 0.5;
+
         private readonly OneShotSampleConfig _config;
 
         private float _dragStartX;
@@ -23,6 +25,7 @@ namespace DerelictComputer
         private bool _resizingLeft;
         private bool _resizingRight;
         private bool _mouseWasDownOnClose;
+        private double _lastClickTime;
 
         public OneShotSampleBox(OneShotSampleConfig config)
         {
@@ -88,6 +91,27 @@ namespace DerelictComputer
                     {
                         ret = SampleAction.Delete;
                         Event.current.Use();
+                    }
+                    else if (moveRect.Contains(Event.current.mousePosition))
+                    {
+                        if (_lastClickTime > 0)
+                        {
+                            if (EditorApplication.timeSinceStartup - _lastClickTime < DoubleClickTime)
+                            {
+                                Debug.Log("Double click");
+                                ret = SampleAction.Edit;
+                            }
+                            _lastClickTime = -1;
+                        }
+                        else
+                        {
+                            _lastClickTime = EditorApplication.timeSinceStartup;
+                        }
+                        Event.current.Use();
+                    }
+                    else
+                    {
+                        _lastClickTime = -1;
                     }
                     _resizingRight = false;
                     _resizingLeft = false;

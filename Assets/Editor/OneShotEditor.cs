@@ -11,6 +11,7 @@ namespace DerelictComputer
         private OneShot _oneShot;
         private GUISkin _guiSkin;
         private readonly Dictionary<OneShotSampleConfig, OneShotSampleBox> _boxen = new Dictionary<OneShotSampleConfig, OneShotSampleBox>();
+        private OneShotSampleConfig _currentConfig;
         
         [MenuItem("Window/One Shot Editor")]
         private static void Init()
@@ -25,6 +26,7 @@ namespace DerelictComputer
             _oneShot = Selection.activeGameObject != null ? Selection.activeGameObject.GetComponent<OneShot>() : null;
             _guiSkin = Resources.Load<GUISkin>("OneShotEditorSkin");
             _boxen.Clear();
+            _currentConfig = null;
         }
 
         private void OnSelectionChange()
@@ -48,14 +50,20 @@ namespace DerelictComputer
 
             const float bumperWidth = 8;
             const float pianoKeysHeight = 40;
-            const float sampleEditorWidth = 100;
+            float sampleEditorHeight = _currentConfig != null ? 130 : 0;
 
-            float sampleAreaWidth = position.width - bumperWidth*2 - sampleEditorWidth;
-            float sampleAreaHeight = position.height - pianoKeysHeight;
+            float sampleAreaWidth = position.width - bumperWidth*2;
+            float sampleAreaHeight = position.height - pianoKeysHeight - sampleEditorHeight;
 
-            DrawSampleArea(new Rect(bumperWidth + sampleEditorWidth, 0, sampleAreaWidth, sampleAreaHeight));
 
-            GUI.Box(new Rect(bumperWidth + sampleEditorWidth, sampleAreaHeight, sampleAreaWidth, pianoKeysHeight), "", _guiSkin.GetStyle("PianoKeysBox"));
+            DrawSampleArea(new Rect(bumperWidth, 0, sampleAreaWidth, sampleAreaHeight));
+
+            DrawPianoKeysArea(new Rect(bumperWidth, sampleAreaHeight, sampleAreaWidth, pianoKeysHeight));
+
+            if (_currentConfig != null)
+            {
+                DrawSampleEditor(new Rect(bumperWidth, sampleAreaHeight + pianoKeysHeight, sampleAreaWidth, sampleEditorHeight));
+            }
         }
 
         private void DrawSampleArea(Rect rect)
@@ -99,6 +107,7 @@ namespace DerelictComputer
                         samplesToDelete.Add(_oneShot.Samples[i]);
                         break;
                     case OneShotSampleBox.SampleAction.Edit:
+                        _currentConfig = _oneShot.Samples[i];
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -107,8 +116,24 @@ namespace DerelictComputer
 
             for (int i = 0; i < samplesToDelete.Count; i++)
             {
+                if (_currentConfig == samplesToDelete[i])
+                {
+                    _currentConfig = null;
+                }
                 _oneShot.Samples.Remove(samplesToDelete[i]);
             }
+        }
+
+        private void DrawSampleEditor(Rect rect)
+        {
+            GUILayout.BeginArea(rect);
+            EditorGUILayout.LabelField(_currentConfig.Clip.name + " Settings");
+            EditorGUILayout.Space();
+            _currentConfig.ScalePitch = EditorGUILayout.Toggle("Scale Pitch", _currentConfig.ScalePitch);
+            _currentConfig.AttackTime = EditorGUILayout.Slider("Attack", (float)_currentConfig.AttackTime, 0, 2);
+            _currentConfig.SustainTime = EditorGUILayout.Slider("Sustain", (float)_currentConfig.SustainTime, 0, 2);
+            _currentConfig.ReleaseTime = EditorGUILayout.Slider("Release", (float)_currentConfig.ReleaseTime, 0, 2);
+            GUILayout.EndArea();
         }
 
         private void DrawSampleAddTarget(Rect rect)
@@ -137,6 +162,33 @@ namespace DerelictComputer
                         }
                     }
                     break;
+            }
+        }
+
+        private void DrawPianoKeysArea(Rect rect)
+        {
+            GUI.Box(rect, "", _guiSkin.GetStyle("PianoKeysBox"));
+
+            const int numKeys = 128;
+
+            if (Application.isPlaying)
+            {
+                for (int i = 0; i < numKeys; i++)
+                {
+                    float w = rect.width/numKeys;
+                    float x = rect.x + i*w;
+                    Rect r = new Rect(x, rect.y, w, rect.height);
+                    switch (Event.current.type)
+                    {
+                        case EventType.MouseUp:
+                            if (r.Contains(Event.current.mousePosition))
+                            {
+                                _oneShot.Play(AudioSettings.dspTime, i);
+                                Event.current.Use();
+                            }
+                            break;
+                    }
+                }
             }
         }
     }

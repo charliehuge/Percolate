@@ -261,35 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugPlay: 0
   DebugNote: 17
-  Samples:
-  - Clip: {fileID: 8300000, guid: 86d0bc5d3a1170c4da7f6649b2b7a573, type: 3}
-    BottomNote: 34
-    TopNote: 92
-    ScalePitch: 1
-    AttackTime: 0
-    SustainTime: 1
-    ReleaseTime: 0.1
-  - Clip: {fileID: 8300000, guid: 86d0bc5d3a1170c4da7f6649b2b7a573, type: 3}
-    BottomNote: 0
-    TopNote: 72
-    ScalePitch: 1
-    AttackTime: 0
-    SustainTime: 1
-    ReleaseTime: 0.1
-  - Clip: {fileID: 8300000, guid: 86d0bc5d3a1170c4da7f6649b2b7a573, type: 3}
-    BottomNote: 58
-    TopNote: 127
-    ScalePitch: 1
-    AttackTime: 0
-    SustainTime: 1
-    ReleaseTime: 0.1
-  - Clip: {fileID: 8300000, guid: 86d0bc5d3a1170c4da7f6649b2b7a573, type: 3}
-    BottomNote: 0
-    TopNote: 92
-    ScalePitch: 1
-    AttackTime: 0
-    SustainTime: 1
-    ReleaseTime: 0.1
+  Samples: []
   _samplePlayerPrefab: {fileID: 11483938, guid: 1be0470aa943ca44aad19a829049dbd5,
     type: 2}
 --- !u!4 &1837604108
@@ -299,7 +271,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1837604106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.04, y: 0, z: -7.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
