@@ -46,15 +46,16 @@ namespace DerelictComputer
                 return;
             }
 
-            const float bumperWidth = 16;
+            const float bumperWidth = 8;
             const float pianoKeysHeight = 40;
+            const float sampleEditorWidth = 100;
 
-            float sampleAreaWidth = position.width - bumperWidth*2;
+            float sampleAreaWidth = position.width - bumperWidth*2 - sampleEditorWidth;
             float sampleAreaHeight = position.height - pianoKeysHeight;
 
-            DrawSampleArea(new Rect(bumperWidth, 0, sampleAreaWidth, sampleAreaHeight));
+            DrawSampleArea(new Rect(bumperWidth + sampleEditorWidth, 0, sampleAreaWidth, sampleAreaHeight));
 
-            GUI.Box(new Rect(bumperWidth, sampleAreaHeight, sampleAreaWidth, pianoKeysHeight), "", _guiSkin.GetStyle("PianoKeysBox"));
+            GUI.Box(new Rect(bumperWidth + sampleEditorWidth, sampleAreaHeight, sampleAreaWidth, pianoKeysHeight), "", _guiSkin.GetStyle("PianoKeysBox"));
         }
 
         private void DrawSampleArea(Rect rect)
@@ -70,6 +71,7 @@ namespace DerelictComputer
             vOffset += dragRowHeight + rowPadding;
 
             float rowHeight = Mathf.Max((rect.height - dragRowHeight - rowPadding * (_oneShot.Samples.Count + 2)) / _oneShot.Samples.Count, minRowHeight);
+            var sampleActions = new OneShotSampleBox.SampleAction[_oneShot.Samples.Count];
 
             for (int i = 0; i < _oneShot.Samples.Count; i++)
             {
@@ -81,8 +83,31 @@ namespace DerelictComputer
                     _boxen.Add(_oneShot.Samples[i], box);
                 }
 
-                box.Draw(new Rect(rect.x, rect.y + vOffset, rect.width, rowHeight), _guiSkin);
+                sampleActions[i] = box.Draw(new Rect(rect.x, rect.y + vOffset, rect.width, rowHeight), _guiSkin);
                 vOffset += rowHeight + rowPadding;
+            }
+
+            var samplesToDelete = new List<OneShotSampleConfig>();
+
+            for (int i = 0; i < sampleActions.Length; i++)
+            {
+                switch (sampleActions[i])
+                {
+                    case OneShotSampleBox.SampleAction.None:
+                        break;
+                    case OneShotSampleBox.SampleAction.Delete:
+                        samplesToDelete.Add(_oneShot.Samples[i]);
+                        break;
+                    case OneShotSampleBox.SampleAction.Edit:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            for (int i = 0; i < samplesToDelete.Count; i++)
+            {
+                _oneShot.Samples.Remove(samplesToDelete[i]);
             }
         }
 

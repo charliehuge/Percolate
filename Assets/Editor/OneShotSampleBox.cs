@@ -7,6 +7,13 @@ namespace DerelictComputer
 {
     public class OneShotSampleBox
     {
+        public enum SampleAction
+        {
+            None,
+            Delete,
+            Edit
+        }
+
         private readonly OneShotSampleConfig _config;
 
         private float _dragStartX;
@@ -15,31 +22,43 @@ namespace DerelictComputer
         private bool _moving;
         private bool _resizingLeft;
         private bool _resizingRight;
+        private bool _mouseWasDownOnClose;
 
         public OneShotSampleBox(OneShotSampleConfig config)
         {
             _config = config;
         }
 
-        public void Draw(Rect boundsRect, GUISkin skin)
+        public SampleAction Draw(Rect boundsRect, GUISkin skin)
         {
+            SampleAction ret = SampleAction.None;
+
             const float resizeWidth = 20;
+            const float closeSize = 20;
 
             float x = boundsRect.x + boundsRect.width * _config.BottomNote/127f;
             float w = boundsRect.width * (_config.TopNote- _config.BottomNote)/127f;
             Rect rect = new Rect(x, boundsRect.y, w, boundsRect.height);
-            Rect resizeRectLeft = new Rect(rect.x, rect.y, resizeWidth, rect.height);
-            Rect resizeRectRight = new Rect(rect.x + rect.width - resizeWidth, rect.y, resizeWidth, rect.height);
+            Rect resizeRectLeft = new Rect(rect.x - resizeWidth/2, rect.y, resizeWidth, rect.height);
+            Rect resizeRectRight = new Rect(rect.x + rect.width - resizeWidth/2, rect.y + closeSize, resizeWidth, rect.height - closeSize);
             Rect moveRect = new Rect(rect.x + resizeWidth, rect.y, rect.width - resizeWidth * 2, rect.height);
+            Rect closeRect = new Rect(rect.x + rect.width - closeSize, rect.y, closeSize, closeSize);
 
             EditorGUIUtility.AddCursorRect(resizeRectLeft, MouseCursor.ResizeHorizontal);
             EditorGUIUtility.AddCursorRect(resizeRectRight, MouseCursor.ResizeHorizontal);
             EditorGUIUtility.AddCursorRect(moveRect, MouseCursor.MoveArrow);
+            EditorGUIUtility.AddCursorRect(closeRect, MouseCursor.ArrowMinus);
 
             switch (Event.current.type)
             {
                 case EventType.MouseDown:
-                    if (resizeRectLeft.Contains(Event.current.mousePosition))
+                    if (closeRect.Contains(Event.current.mousePosition))
+                    {
+                        _mouseWasDownOnClose = true;
+                        Event.current.Use();
+
+                    }
+                    else if (resizeRectLeft.Contains(Event.current.mousePosition))
                     {
                         _resizingLeft = true;
                         _dragStartX = Event.current.mousePosition.x;
@@ -65,9 +84,15 @@ namespace DerelictComputer
                     }
                     break;
                 case EventType.MouseUp:
+                    if (_mouseWasDownOnClose && closeRect.Contains(Event.current.mousePosition))
+                    {
+                        ret = SampleAction.Delete;
+                        Event.current.Use();
+                    }
                     _resizingRight = false;
                     _resizingLeft = false;
                     _moving = false;
+                    _mouseWasDownOnClose = false;
                     break;
                 case EventType.MouseDrag:
                     if (_moving)
@@ -114,6 +139,8 @@ namespace DerelictComputer
             }
 
             GUI.Box(rect, _config.Clip.name + " (" + _config.BottomNote + ", " + _config.TopNote + ")", skin.GetStyle("ClipBox"));
+
+            return ret;
         }
     }
 }
