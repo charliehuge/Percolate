@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DerelictComputer
 {
-    public class OneShot : MonoBehaviour
+    public class OneShot : Instrument
     {
         private const int InitialVoices = 8;
 
@@ -16,13 +16,13 @@ namespace DerelictComputer
 
         private readonly List<OneShotSamplePlayer> _samplePlayers = new List<OneShotSamplePlayer>();
 
-        public void Play(double playTime, int note)
+        protected override void OnPlayNote(double playTime, double duration, int midiNote)
         {
             foreach (var sample in Samples)
             {
-                if (sample.BottomNote <= note && note <= sample.TopNote)
+                if (sample.BottomNote <= midiNote && midiNote <= sample.TopNote)
                 {
-                    GetSamplePlayer().Play(playTime, note, sample);
+                    GetSamplePlayer().Play(playTime, midiNote, sample);
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace DerelictComputer
         {
             if (DebugPlay)
             {
-                Play(AudioSettings.dspTime, DebugNote);
+                PlayNote(AudioSettings.dspTime, DebugNote);
                 DebugPlay = false;
             }
         }
@@ -63,9 +63,9 @@ namespace DerelictComputer
         {
             var ossp = Instantiate(_samplePlayerPrefab);
             ossp.transform.SetParent(transform);
-            ossp.transform.position = Vector3.zero;
+            ossp.transform.localPosition = Vector3.zero;
             ossp.transform.localScale = Vector3.one;
-            ossp.transform.rotation = Quaternion.identity;
+            ossp.transform.localRotation = Quaternion.identity;
             return ossp;
         }
     }

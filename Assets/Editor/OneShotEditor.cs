@@ -183,7 +183,7 @@ namespace DerelictComputer
                         case EventType.MouseUp:
                             if (r.Contains(Event.current.mousePosition))
                             {
-                                _oneShot.Play(AudioSettings.dspTime, i);
+                                _oneShot.PlayNote(AudioSettings.dspTime, i);
                                 Event.current.Use();
                             }
                             break;
