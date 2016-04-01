@@ -5,6 +5,7 @@ namespace DerelictComputer.DCTree
 {
     public class FiniteRepeater : Repeater
     {
+        [NodeParam, Range(1, int.MaxValue)]
         protected readonly int Repeats;
 
         protected int RepeatCount;
