@@ -20,11 +20,17 @@ namespace DerelictComputer
                 new PlayNote(_oneShot, 0),
                 new PlayNote(_oneShot, 12),
                 new PlayNote(_oneShot, 7),
-                new Sequence(new Node[]
+                new Charger(new Sequence(new Node[]
                 {
-                    new FiniteRepeater(new PlayNote(_oneShot, 17), 3),
-                    new PlayNote(_oneShot, 19), 
-                }), 
+                    new FiniteRepeater(new PlayNote(_oneShot, 17), UnityEngine.Random.Range(1, 8)),
+                    new PlayNote(_oneShot, 19),
+                    new Charger(new Sequence(new Node[]
+                    {
+                        new PlayNote(_oneShot, 7),
+                        new PlayNote(_oneShot, 19),
+                    }), (uint) UnityEngine.Random.Range(1, 8)),
+                })
+                    , (uint) UnityEngine.Random.Range(1, 4)),
             }));
 
             _currentTick = 0;
