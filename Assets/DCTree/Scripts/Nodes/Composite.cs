@@ -2,7 +2,7 @@
 {
     public abstract class Composite : Node
     {
-        protected readonly Node[] ChildNodes;
+        [NodeChild] protected readonly Node[] ChildNodes;
 
         protected Composite(Node[] childNodes)
         {

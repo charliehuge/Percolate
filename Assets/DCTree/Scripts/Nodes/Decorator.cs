@@ -2,7 +2,7 @@
 {
     public abstract class Decorator : Node
     {
-        protected readonly Node ChildNode;
+        [NodeChild] protected readonly Node ChildNode;
 
         protected Decorator(Node childNode)
         {

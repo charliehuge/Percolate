@@ -4,7 +4,7 @@ namespace DerelictComputer.DCTree
 {
     public class Charger : Decorator
     {
-        protected uint ChargesToExecuteChild;
+        [NodeParam(1, 9999)] protected uint ChargesToExecuteChild;
 
         private uint _charges;
 

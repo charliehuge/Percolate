@@ -5,7 +5,7 @@ namespace DerelictComputer.DCTree
     public class PlayNote : Leaf
     {
         protected readonly Instrument TargetInstrument;
-        protected readonly int Note;
+        [NodeParam(0, 127)] protected readonly int Note;
 
         public PlayNote(Instrument targetInstrument, int note)
         {

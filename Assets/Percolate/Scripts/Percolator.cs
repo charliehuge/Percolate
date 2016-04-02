@@ -22,7 +22,7 @@ namespace DerelictComputer
                 new PlayNote(_oneShot, 7),
                 new Charger(new Sequence(new Node[]
                 {
-                    new FiniteRepeater(new PlayNote(_oneShot, 17), UnityEngine.Random.Range(1, 8)),
+                    new FiniteRepeater(new PlayNote(_oneShot, 17), (uint)UnityEngine.Random.Range(1, 8)),
                     new PlayNote(_oneShot, 19),
                     new Charger(new Sequence(new Node[]
                     {

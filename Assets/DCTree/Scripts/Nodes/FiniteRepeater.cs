@@ -5,12 +5,11 @@ namespace DerelictComputer.DCTree
 {
     public class FiniteRepeater : Repeater
     {
-        [NodeParam, Range(1, int.MaxValue)]
-        protected readonly int Repeats;
+        [NodeParam(1, 9999)] protected readonly uint Repeats;
 
-        protected int RepeatCount;
+        protected uint RepeatCount;
 
-        public FiniteRepeater(Node childNode, int repeats) : base(childNode)
+        public FiniteRepeater(Node childNode, uint repeats) : base(childNode)
         {
             Repeats = repeats;
         }
