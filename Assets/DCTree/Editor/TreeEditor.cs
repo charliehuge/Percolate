@@ -45,7 +45,7 @@ namespace DerelictComputer.DCTree
 
             if (GUILayout.Button("Add Node"))
             {
-                var nodeInfo = new NodeInfo(typeof (FiniteRepeater));
+                var nodeInfo = new NodeInfo(typeof (Sequence));
                 _treeInfo.AllNodes.Add(nodeInfo);
                 _nodeWindows.Add(new NodeWindow(nodeInfo));
             }
@@ -54,7 +54,7 @@ namespace DerelictComputer.DCTree
 
             if (_connectingWindow != null)
             {
-                Handles.DrawLine(_connectingWindow.WindowRect.position, Event.current.mousePosition);
+                Handles.DrawLine(_connectingWindow.WindowRect.position + _connectingWindow.NodeInfo.ChildParam.ConnectorPositions.Last(), Event.current.mousePosition);
 
                 switch (Event.current.type)
                 {
@@ -64,9 +64,11 @@ namespace DerelictComputer.DCTree
                             if (nodeWindow != _connectingWindow &&
                                 nodeWindow.WindowRect.Contains(Event.current.mousePosition))
                             {
-                                _connectingWindow.NodeInfo.AddChild(nodeWindow.NodeInfo);
+                                if (_connectingWindow.NodeInfo.AddChild(nodeWindow.NodeInfo))
+                                {
+                                    Debug.Log("connected");
+                                }
                                 Event.current.Use();
-                                Debug.Log("connected");
                                 break;
                             }
                         }
@@ -81,17 +83,27 @@ namespace DerelictComputer.DCTree
 
             foreach (var nodeWindow in _nodeWindows)
             {
-                if (nodeWindow.NodeInfo.ChildParam != null)
+                if (nodeWindow.NodeInfo.ChildParam == null)
                 {
-                    foreach (var nodeInfo in nodeWindow.NodeInfo.ChildParam.GetChildren())
+                    continue;
+                }
+
+                var children = nodeWindow.NodeInfo.ChildParam.GetChildren();
+                var connectors = nodeWindow.NodeInfo.ChildParam.ConnectorPositions;
+
+                if (connectors == null)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < connectors.Length; i++)
+                {
+                    if (i >= children.Length || children[i] == null)
                     {
-                        if (nodeInfo == null)
-                        {
-                            continue;
-                        }
-                        Handles.DrawLine(nodeWindow.WindowRect.center, nodeInfo.EditorPosition);
-                        //asdf
+                        continue;
                     }
+
+                    Handles.DrawLine(nodeWindow.WindowRect.position + connectors[i], children[i].EditorPosition + Vector2.right * nodeWindow.WindowRect.width /2);
                 }
             }
 

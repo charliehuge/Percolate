@@ -236,6 +236,8 @@ namespace DerelictComputer.DCTree
     {
         public readonly string Name;
 
+        public Vector2[] ConnectorPositions { get; protected set; }
+
         protected NodeChildInfo(string name)
         {
             Name = name;
@@ -244,6 +246,8 @@ namespace DerelictComputer.DCTree
         public abstract bool DrawEditor(Rect windowRect);
 
         public abstract void AddChild(NodeInfo child);
+
+        public abstract void RemoveChild(NodeInfo child);
 
         public abstract NodeInfo[] GetChildren();
     }
@@ -265,6 +269,8 @@ namespace DerelictComputer.DCTree
         public override bool DrawEditor(Rect windowRect)
         {
             var connectorRect = new Rect(windowRect.width / 2, windowRect.height - 12, 10, 10);
+            ConnectorPositions = new[]
+            {new Vector2(connectorRect.x + connectorRect.width/2, connectorRect.y + connectorRect.height)};
             GUI.Box(connectorRect, "");
             EditorGUIUtility.AddCursorRect(connectorRect, MouseCursor.Link);
 
@@ -287,9 +293,17 @@ namespace DerelictComputer.DCTree
             Child = child;
         }
 
+        public override void RemoveChild(NodeInfo child)
+        {
+            if (child == Child)
+            {
+                Child = null;
+            }
+        }
+
         public override NodeInfo[] GetChildren()
         {
-            return new[] {Child};
+            return Child == null ? new NodeInfo[0] : new[] {Child};
         }
     }
 
@@ -314,7 +328,35 @@ namespace DerelictComputer.DCTree
 
         public override bool DrawEditor(Rect windowRect)
         {
-            throw new NotImplementedException();
+            const float connectorSize = 10;
+            const float connectorPadding = 2;
+
+            ConnectorPositions = new Vector2[Children.Count+1];
+            var connectorRect = new Rect(0, windowRect.height - connectorSize - connectorPadding, connectorSize, connectorSize);
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                ConnectorPositions[i] = new Vector2(connectorRect.x + connectorRect.width / 2, connectorRect.y + connectorRect.height);
+                GUI.Box(connectorRect, "");
+                connectorRect.x += connectorSize + connectorPadding;
+            }
+
+            ConnectorPositions[Children.Count] = new Vector2(connectorRect.x + connectorRect.width / 2, connectorRect.y + connectorRect.height);
+            GUI.Box(connectorRect, "");
+            EditorGUIUtility.AddCursorRect(connectorRect, MouseCursor.Link);
+
+            switch (Event.current.type)
+            {
+                case EventType.MouseDown:
+                    if (connectorRect.Contains(Event.current.mousePosition))
+                    {
+                        Event.current.Use();
+                        return true;
+                    }
+                    break;
+            }
+
+            return false;
         }
 
         public override void AddChild(NodeInfo child)
@@ -325,6 +367,14 @@ namespace DerelictComputer.DCTree
             }
 
             Children.Add(child);
+        }
+
+        public override void RemoveChild(NodeInfo child)
+        {
+            if (Children.Contains(child))
+            {
+                Children.Remove(child);
+            }
         }
 
         public override NodeInfo[] GetChildren()
@@ -340,6 +390,7 @@ namespace DerelictComputer.DCTree
         public readonly List<NodeParamInfo> NodeParams;
         public readonly NodeChildInfo ChildParam;
         public Vector2 EditorPosition;
+        public NodeInfo Parent;
 
         public NodeInfo(Type nodeType)
         {
@@ -451,15 +502,66 @@ namespace DerelictComputer.DCTree
             return ChildParam != null && ChildParam.DrawEditor(windowRect);
         }
 
-        public void AddChild(NodeInfo child)
+        public bool AddChild(NodeInfo child)
         {
             if (ChildParam == null)
             {
-                Debug.LogWarning("Tried to connect something that doesn't have children");
+                Debug.LogWarning("Tried to connect something that can't have children");
+                return false;
+            }
+
+            if (!ValidateChild(this, child))
+            {
+                return false;
+            }
+
+            if (child.Parent != null)
+            {
+                child.Parent.RemoveChild(child);
+            }
+
+            child.Parent = this;
+            ChildParam.AddChild(child);
+            return true;
+        }
+
+        public void RemoveChild(NodeInfo child)
+        {
+            if (ChildParam == null)
+            {
                 return;
             }
 
-            ChildParam.AddChild(child);
+            ChildParam.RemoveChild(child);
+        }
+
+        private static bool ValidateChild(NodeInfo parent, NodeInfo child)
+        {
+            // if the parent equals the child, then we have a loop
+            if (parent == child)
+            {
+                Debug.Log("Loop");
+                return false;
+            }
+
+            // if the child node doesn't have any children, then parenting is valid
+            if (child.ChildParam == null)
+            {
+                return true;
+            }
+
+            // if one of the children doesn't validate, then parenting is invalid
+            foreach (var nodeInfo in child.ChildParam.GetChildren())
+            {
+                if (ValidateChild(parent, nodeInfo))
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
     }
 }
