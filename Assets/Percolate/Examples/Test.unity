@@ -730,8 +730,8 @@ MonoBehaviour:
     TopNote: 127
     ScalePitch: 1
     AttackTime: 0
-    SustainTime: 1
-    ReleaseTime: 0.1
+    SustainTime: 0
+    ReleaseTime: 0.12700000405311584
   - Clip: {fileID: 8300000, guid: 86d0bc5d3a1170c4da7f6649b2b7a573, type: 3}
     BottomNote: 0
     TopNote: 127

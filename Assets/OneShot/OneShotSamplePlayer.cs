@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace DerelictComputer
@@ -36,40 +37,60 @@ namespace DerelictComputer
         public bool DebugPlay;
         public AudioClip DebugClip;
 
+        private IntPtr _nativePtr = IntPtr.Zero;
         private AudioSource _audioSource;
-        private double _sampleDuration;
-        private OneShotSampleConfig _config;
-        private double _playTime;
-        private double _attackEndTime;
-        private double _sustainEndTime;
-        private double _releaseEndTime;
+
+        [DllImport("VolumeEnvelopeNative")]
+        private static extern IntPtr VolumeEnvelope_New(double sampleDuration);
+
+        [DllImport("VolumeEnvelopeNative")]
+        private static extern void VolumeEnvelope_Delete(IntPtr env);
+
+        [DllImport("VolumeEnvelopeNative")]
+        private static extern void VolumeEnvelope_SetEnvelope(IntPtr env, double startTime,
+            double attackDuration, double sustainDuration, double releaseDuration);
+
+        [DllImport("VolumeEnvelopeNative")]
+        private static extern bool VolumeEnvelope_ProcessBuffer(IntPtr env, [In, Out] float[] buffer, int numSamples,
+            int numChannels, double dspTime);
+
+        [DllImport("VolumeEnvelopeNative")]
+        private static extern bool VolumeEnvelope_IsAvailable(IntPtr env);
 
         public bool Available
         {
-            get { return _playTime < 0; }
+            get { return VolumeEnvelope_IsAvailable(_nativePtr); }
         }
 
         public void Play(double playTime, int note, OneShotSampleConfig config)
         {
-            _playTime = playTime;
-            _attackEndTime = _playTime + config.AttackTime;
-            _sustainEndTime = _attackEndTime + config.SustainTime;
-            _releaseEndTime = _sustainEndTime + config.ReleaseTime;
+            if (_nativePtr != IntPtr.Zero)
+            {
+                VolumeEnvelope_SetEnvelope(_nativePtr, playTime, config.AttackTime, config.SustainTime, config.ReleaseTime);
+            }
 
-            _config = config;
             _audioSource.pitch = config.ScalePitch ? SemitonesToPitch(note - config.BottomNote) : 1;
             _audioSource.clip = config.Clip;
+            _audioSource.timeSamples = 0;
             _audioSource.PlayScheduled(playTime);
         }
 
-        private void Awake()
+        private void OnEnable()
         {
             _audioSource = GetComponent<AudioSource>();
             _audioSource.playOnAwake = false;
             _audioSource.Stop();
 
-            _sampleDuration = 1.0/AudioSettings.outputSampleRate;
-            _playTime = -1;
+            _nativePtr = VolumeEnvelope_New(1.0/AudioSettings.outputSampleRate);
+        }
+
+        private void OnDisable()
+        {
+            if (_nativePtr != IntPtr.Zero)
+            {
+                VolumeEnvelope_Delete(_nativePtr);
+                _nativePtr = IntPtr.Zero;
+            }
         }
 
         private void Update()
@@ -85,47 +106,9 @@ namespace DerelictComputer
 
         private void OnAudioFilterRead(float[] buffer, int numChannels)
         {
-            float volume = 0;
-            double dspTime = AudioSettings.dspTime;
-
-            // if we won't get to the play time during this buffer, skip it
-            if (_playTime < 0 || (dspTime + buffer.Length*_sampleDuration) < _playTime)
+            if (_nativePtr != IntPtr.Zero)
             {
-                return;
-            }
-
-            for (int i = 0; i < buffer.Length; i += numChannels)
-            {
-                // wait until we hit the play start time
-                // optimization: shortcut if we hit the end of the release during this buffer
-                if (_playTime < 0 || dspTime < _playTime)
-                {
-                    volume = 0;
-                }
-                else if (_config.AttackTime > 0 && dspTime < _attackEndTime)
-                {
-                    volume = (float)Math.Pow((dspTime - _playTime) / _config.AttackTime, 4);
-                }
-                else if (dspTime < _sustainEndTime)
-                {
-                    volume = 1;
-                }
-                else if (_config.ReleaseTime > 0 && dspTime < _releaseEndTime)
-                {
-                    volume = (float)Math.Pow((_releaseEndTime - dspTime) / _config.ReleaseTime, 4);
-                }
-                else
-                {
-                    volume = 0;
-                    _playTime = -1;
-                }
-
-                for (int j = 0; j < numChannels; j++)
-                {
-                    buffer[i + j] *= volume;
-                }
-
-                dspTime += _sampleDuration;
+                VolumeEnvelope_ProcessBuffer(_nativePtr, buffer, buffer.Length, numChannels, AudioSettings.dspTime);
             }
         }
 

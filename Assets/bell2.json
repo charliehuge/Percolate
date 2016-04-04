@@ -1,20 +1,20 @@
 {
     "_serializableNodes": [
         {
-            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Sequence, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Selector, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "EditorPosition": {
-                "x": 538.0,
-                "y": 189.0
+                "x": 74.0,
+                "y": 117.0
             },
             "Params": [],
             "ChildCount": 2,
             "FirstChildIndex": 1
         },
         {
-            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Selector, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Sequence, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "EditorPosition": {
-                "x": 323.0,
-                "y": 328.0
+                "x": 204.0,
+                "y": 322.0
             },
             "Params": [],
             "ChildCount": 2,
@@ -124,8 +124,8 @@
         {
             "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.FiniteRepeater, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "EditorPosition": {
-                "x": 907.0,
-                "y": 343.0
+                "x": 842.0,
+                "y": 291.0
             },
             "Params": [
                 {
@@ -139,21 +139,98 @@
             "FirstChildIndex": 9
         },
         {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Sequence, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 966.0,
+                "y": 395.0
+            },
+            "Params": [],
+            "ChildCount": 2,
+            "FirstChildIndex": 10
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Charger, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 875.0,
+                "y": 503.0
+            },
+            "Params": [
+                {
+                    "FieldName": "ChargesToExecuteChild",
+                    "IntValue": 2,
+                    "FloatValue": 0.0,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 1,
+            "FirstChildIndex": 11
+        },
+        {
             "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.PlayNote, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "EditorPosition": {
-                "x": 1040.0,
-                "y": 478.0
+                "x": 876.0,
+                "y": 619.0
             },
             "Params": [
                 {
                     "FieldName": "Note",
-                    "IntValue": 0,
+                    "IntValue": 16,
                     "FloatValue": 0.0,
                     "StringValue": ""
                 }
             ],
             "ChildCount": 0,
-            "FirstChildIndex": 10
+            "FirstChildIndex": 12
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.BlackboardFloatThreshold, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 1196.0,
+                "y": 498.0
+            },
+            "Params": [
+                {
+                    "FieldName": "ParamName",
+                    "IntValue": 0,
+                    "FloatValue": 0.0,
+                    "StringValue": ""
+                },
+                {
+                    "FieldName": "Threshold",
+                    "IntValue": 0,
+                    "FloatValue": 0.5,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 1,
+            "FirstChildIndex": 13
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.PlayNote, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 1206.0,
+                "y": 621.0
+            },
+            "Params": [
+                {
+                    "FieldName": "Note",
+                    "IntValue": 19,
+                    "FloatValue": 0.0,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 0,
+            "FirstChildIndex": 14
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Sequence, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 538.0,
+                "y": 189.0
+            },
+            "Params": [],
+            "ChildCount": 2,
+            "FirstChildIndex": 1
         }
     ]
 }
