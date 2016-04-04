@@ -8,29 +8,36 @@ namespace DerelictComputer.DCTree
         private static readonly Vector2 WindowSize = new Vector2(300, 80);
         private static int _nextId;
 
-        public readonly NodeInfo NodeInfo;
+        public readonly EditorNode EditorNode;
 
         private readonly int _id;
 
         public Rect WindowRect { get; private set; }
         public bool GotMouseDownOnConnector { get; private set; }
 
-        public NodeWindow(NodeInfo nodeInfo)
+        public NodeWindow(Type type, Vector2 position)
         {
-            WindowRect = new Rect(nodeInfo.EditorPosition, WindowSize);
+            EditorNode = new EditorNode(type);
+            WindowRect = new Rect(position, WindowSize);
             _id = _nextId++;
-            NodeInfo = nodeInfo;
+        }
+
+        public NodeWindow(SerializableNode sNode)
+        {
+            EditorNode = new EditorNode(sNode);
+            WindowRect = new Rect(EditorNode.NodeData.EditorPosition, WindowSize);
+            _id = _nextId++;
         }
 
         public void Draw()
         {
-            WindowRect = GUI.Window(_id, WindowRect, WindowUpdate, NodeInfo.NodeType.Name);
-            NodeInfo.EditorPosition = WindowRect.position;
+            WindowRect = GUI.Window(_id, WindowRect, WindowUpdate, EditorNode.DisplayName);
+            EditorNode.NodeData.EditorPosition = WindowRect.position;
         }
 
         private void WindowUpdate(int id)
         {
-            GotMouseDownOnConnector = NodeInfo.DrawEditor(WindowRect);
+            GotMouseDownOnConnector = EditorNode.DrawEditor(WindowRect);
             GUI.DragWindow();
         }
     }

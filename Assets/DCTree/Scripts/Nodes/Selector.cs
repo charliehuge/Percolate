@@ -6,7 +6,7 @@ namespace DerelictComputer.DCTree
     {
         protected int SelectedChildIndex;
 
-        public Selector(Node[] childNodes) : base(childNodes)
+        public Selector(SerializableNode serialized, Node[] childNodes) : base(serialized, childNodes)
         {
         }
 

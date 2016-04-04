@@ -7,10 +7,17 @@ namespace DerelictComputer.DCTree
         protected readonly Instrument TargetInstrument;
         [NodeParam(0, 127)] protected readonly int Note;
 
-        public PlayNote(Instrument targetInstrument, int note)
+        public PlayNote(SerializableNode serialized, Instrument targetInstrument) : base(serialized)
         {
             TargetInstrument = targetInstrument;
-            Note = note;
+
+            for (int i = 0; i < serialized.Params.Length; i++)
+            {
+                if (serialized.Params[i].FieldName == "Note")
+                {
+                    Note = serialized.Params[i].IntValue;
+                }
+            }
         }
 
         protected override Result OnTick(double tickDspTime)

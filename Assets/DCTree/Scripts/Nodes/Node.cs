@@ -4,6 +4,8 @@
     {
         private bool _started;
 
+        protected Node(SerializableNode serialized) { }
+
         public Result Tick(double tickDspTime)
         {
             var startResult = Start();

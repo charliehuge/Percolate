@@ -5,7 +5,7 @@ namespace DerelictComputer.DCTree
 {
     public class Succeeder : Decorator
     {
-        public Succeeder(Node childNode) : base(childNode)
+        public Succeeder(SerializableNode serialized, Node childNode) : base(serialized, childNode)
         {
         }
 

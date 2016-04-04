@@ -5,13 +5,19 @@ namespace DerelictComputer.DCTree
 {
     public class FiniteRepeater : Repeater
     {
-        [NodeParam(1, 9999)] protected readonly uint Repeats;
+        [NodeParam(1, 9999)] protected readonly int Repeats;
 
         protected uint RepeatCount;
 
-        public FiniteRepeater(Node childNode, uint repeats) : base(childNode)
+        public FiniteRepeater(SerializableNode serialized, Node childNode) : base(serialized, childNode)
         {
-            Repeats = repeats;
+            for (int i = 0; i < serialized.Params.Length; i++)
+            {
+                if (serialized.Params[i].FieldName == "Repeats")
+                {
+                    Repeats = serialized.Params[i].IntValue;
+                }
+            }
         }
 
         protected override Result OnStart()

@@ -4,13 +4,19 @@ namespace DerelictComputer.DCTree
 {
     public class Charger : Decorator
     {
-        [NodeParam(1, 9999)] protected uint ChargesToExecuteChild;
+        [NodeParam(1, 9999)] protected readonly int ChargesToExecuteChild;
 
         private uint _charges;
 
-        public Charger(Node childNode, uint chargesToExecuteChild) : base(childNode)
+        public Charger(SerializableNode serialized, Node childNode) : base(serialized, childNode)
         {
-            ChargesToExecuteChild = chargesToExecuteChild;
+            for (int i = 0; i < serialized.Params.Length; i++)
+            {
+                if (serialized.Params[i].FieldName == "ChargesToExecuteChild")
+                {
+                    ChargesToExecuteChild = serialized.Params[i].IntValue;
+                }
+            }
         }
 
         protected override Result OnStart()

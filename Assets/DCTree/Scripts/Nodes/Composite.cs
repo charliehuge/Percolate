@@ -4,7 +4,7 @@
     {
         [NodeChild] protected readonly Node[] ChildNodes;
 
-        protected Composite(Node[] childNodes)
+        protected Composite(SerializableNode serialized, Node[] childNodes) : base(serialized)
         {
             ChildNodes = childNodes;
         }

@@ -4,7 +4,7 @@ namespace DerelictComputer.DCTree
 {
     public class Repeater : Decorator
     {
-        public Repeater(Node childNode) : base(childNode)
+        public Repeater(SerializableNode serialized, Node childNode) : base(serialized, childNode)
         {
         }
 

@@ -5,7 +5,7 @@ namespace DerelictComputer.DCTree
 {
     public class Inverter : Decorator
     {
-        public Inverter(Node childNode) : base(childNode)
+        public Inverter(SerializableNode serialized, Node childNode) : base(serialized, childNode)
         {
         }
 

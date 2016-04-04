@@ -6,7 +6,7 @@ namespace DerelictComputer.DCTree
     {
         protected int CurrentChildIndex;
 
-        public Sequence(Node[] childNodes) : base(childNodes)
+        public Sequence(SerializableNode serialized, Node[] childNodes) : base(serialized, childNodes)
         {
         }
 

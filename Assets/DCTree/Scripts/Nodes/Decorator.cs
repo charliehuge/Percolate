@@ -4,7 +4,7 @@
     {
         [NodeChild] protected readonly Node ChildNode;
 
-        protected Decorator(Node childNode)
+        protected Decorator(SerializableNode serialized, Node childNode) : base(serialized)
         {
             ChildNode = childNode;
         }

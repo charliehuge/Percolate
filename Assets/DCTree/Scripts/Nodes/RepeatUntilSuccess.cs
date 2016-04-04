@@ -4,7 +4,7 @@ namespace DerelictComputer.DCTree
 {
     public class RepeatUntilSuccess : Repeater
     {
-        public RepeatUntilSuccess(Node childNode) : base(childNode)
+        public RepeatUntilSuccess(SerializableNode serialized, Node childNode) : base(serialized, childNode)
         {
         }
 
