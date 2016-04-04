@@ -1,0 +1,125 @@
+{
+    "_serializableNodes": [
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Repeater, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 602.0,
+                "y": 168.0
+            },
+            "Params": [],
+            "ChildCount": 1,
+            "FirstChildIndex": 1
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Selector, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 600.0,
+                "y": 266.0
+            },
+            "Params": [],
+            "ChildCount": 2,
+            "FirstChildIndex": 2
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.BlackboardFloatThreshold, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 383.0,
+                "y": 390.0
+            },
+            "Params": [
+                {
+                    "FieldName": "ParamName",
+                    "IntValue": 0,
+                    "FloatValue": 0.0,
+                    "StringValue": "Density"
+                },
+                {
+                    "FieldName": "Threshold",
+                    "IntValue": 0,
+                    "FloatValue": 0.5,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 1,
+            "FirstChildIndex": 3
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.PlayNote, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 381.0,
+                "y": 491.0
+            },
+            "Params": [
+                {
+                    "FieldName": "Note",
+                    "IntValue": 0,
+                    "FloatValue": 0.0,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 0,
+            "FirstChildIndex": 4
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Sequence, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 734.0,
+                "y": 386.0
+            },
+            "Params": [],
+            "ChildCount": 2,
+            "FirstChildIndex": 5
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.PlayNote, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 737.0,
+                "y": 486.0
+            },
+            "Params": [
+                {
+                    "FieldName": "Note",
+                    "IntValue": 12,
+                    "FloatValue": 0.0,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 0,
+            "FirstChildIndex": 6
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.Charger, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 1079.0,
+                "y": 483.0
+            },
+            "Params": [
+                {
+                    "FieldName": "ChargesToExecuteChild",
+                    "IntValue": 3,
+                    "FloatValue": 0.0,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 1,
+            "FirstChildIndex": 7
+        },
+        {
+            "AssemblyQualifiedTypeName": "DerelictComputer.DCTree.PlayNote, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "EditorPosition": {
+                "x": 1085.0,
+                "y": 593.0
+            },
+            "Params": [
+                {
+                    "FieldName": "Note",
+                    "IntValue": 24,
+                    "FloatValue": 0.0,
+                    "StringValue": ""
+                }
+            ],
+            "ChildCount": 0,
+            "FirstChildIndex": 8
+        }
+    ]
+}

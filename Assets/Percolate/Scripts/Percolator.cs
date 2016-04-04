@@ -10,13 +10,14 @@ namespace DerelictComputer
         [SerializeField] private OneShot _oneShot;
         [SerializeField, Range(1, 8)] private int _tickDivider = 1;
         [SerializeField] private TextAsset _dcTreeJson;
+        [SerializeField] private Blackboard _blackboard;
 
         private BehaviorTree _tree;
         private int _currentTick;
 
         private void OnEnable()
         {
-            _tree = BehaviorTree.LoadForRuntime(_dcTreeJson, _oneShot);
+            _tree = BehaviorTree.LoadForRuntime(_dcTreeJson, _oneShot, _blackboard);
 
             _currentTick = 0;
 

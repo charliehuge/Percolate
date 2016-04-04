@@ -33,10 +33,10 @@ namespace DerelictComputer.DCTree
             return result;
         }
 
-        public static BehaviorTree LoadForRuntime(TextAsset json, Instrument targetInstrument)
+        public static BehaviorTree LoadForRuntime(TextAsset json, Instrument targetInstrument, Blackboard blackboard)
         {
             BehaviorTree tree = JsonUtility.FromJson<BehaviorTree>(json.text);
-            tree.CreateRuntimeTree(targetInstrument);
+            tree.CreateRuntimeTree(targetInstrument, blackboard);
             return tree;
         }
 
@@ -66,27 +66,29 @@ namespace DerelictComputer.DCTree
         }
 #endif
 
-        private void CreateRuntimeTree(Instrument targetInstrument)
+        private void CreateRuntimeTree(Instrument targetInstrument, Blackboard blackboard)
         {
             if (_serializableNodes.Count == 0)
             {
                 return;
             }
 
-            _rootNode = CreateRuntimeNodes(0, targetInstrument);
+            int index = 0;
+            _rootNode = CreateRuntimeNodes(ref index, targetInstrument, blackboard);
         }
 
-        private Node CreateRuntimeNodes(int index, Instrument targetInstrument)
+        private Node CreateRuntimeNodes(ref int index, Instrument targetInstrument, Blackboard blackboard)
         {
             var sNode = _serializableNodes[index];
             Node[] children = new Node[sNode.ChildCount];
 
             for (int i = 0; i < sNode.ChildCount; i++)
             {
-                children[i] = CreateRuntimeNodes(sNode.FirstChildIndex + i, targetInstrument);
+                ++index;
+                children[i] = CreateRuntimeNodes(ref index, targetInstrument, blackboard);
             }
 
-            return InstantiateRuntimeNode(sNode, children, targetInstrument);
+            return InstantiateRuntimeNode(sNode, children, targetInstrument, blackboard);
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace DerelictComputer.DCTree
         /// <param name="sNode"></param>
         /// <param name="children"></param>
         /// <returns></returns>
-        private Node InstantiateRuntimeNode(SerializableNode sNode, Node[] children, Instrument targetInstrument)
+        private Node InstantiateRuntimeNode(SerializableNode sNode, Node[] children, Instrument targetInstrument, Blackboard blackboard)
         {
             Type type = Type.GetType(sNode.AssemblyQualifiedTypeName);
 
@@ -186,6 +188,16 @@ namespace DerelictComputer.DCTree
                 }
 
                 return new Succeeder(sNode, children[0]);
+            }
+            if (type == typeof (BlackboardFloatThreshold))
+            {
+                if (children.Length == 0)
+                {
+                    Debug.LogError("Need to specify a child for " + sNode.AssemblyQualifiedTypeName);
+                    return null;
+                }
+
+                return new BlackboardFloatThreshold(sNode, children[0], blackboard);
             }
 
             Debug.LogError("Unsupported Node: " + sNode.AssemblyQualifiedTypeName);

@@ -31,6 +31,37 @@ namespace DerelictComputer.DCTree
             }
         }
 
+        private void MakeNodeConnections(ref int index)
+        {
+            if (index >= _nodeWindows.Count)
+            {
+                return;
+            }
+
+            var eNode = _nodeWindows[index].EditorNode;
+
+            for (int i = 0; i < eNode.NodeData.ChildCount; ++i)
+            {
+                ++index;
+                eNode.AddChild(_nodeWindows[index].EditorNode);
+                MakeNodeConnections(ref index);
+            }
+            /*
+                        var sNode = _serializableNodes[index];
+            Node[] children = new Node[sNode.ChildCount];
+            index = sNode.FirstChildIndex;
+
+            for (int i = 0; i < sNode.ChildCount; i++)
+            {
+                children[i] = CreateRuntimeNodes(ref index, targetInstrument, blackboard);
+                ++index;
+            }
+
+            return InstantiateRuntimeNode(sNode, children, targetInstrument, blackboard);
+
+            */
+        }
+
         private void AddNode(Type type, Vector2 position)
         {
             var nodeWin = new NodeWindow(type, position);
@@ -78,14 +109,8 @@ namespace DerelictComputer.DCTree
                         _rootNode = _nodeWindows[0];
                     }
 
-                    for (int i = 0; i < _nodeWindows.Count; i++)
-                    {
-                        var en = _nodeWindows[i].EditorNode;
-                        for (int j = 0; j < en.NodeData.ChildCount; j++)
-                        {
-                            en.AddChild(_nodeWindows[en.NodeData.FirstChildIndex + j].EditorNode);
-                        }
-                    }
+                    int index = 0;
+                    MakeNodeConnections(ref index);
                 }
             }
 
@@ -136,6 +161,7 @@ namespace DerelictComputer.DCTree
                         addNodeMenu.AddItem(new GUIContent("Selector"), false, () => { AddNode(typeof(Selector), mousePos); });
                         addNodeMenu.AddItem(new GUIContent("Sequence"), false, () => { AddNode(typeof(Sequence), mousePos); });
                         addNodeMenu.AddItem(new GUIContent("Succeeder"), false, () => { AddNode(typeof(Succeeder), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("BlackboardFloatThreshold"), false, () => { AddNode(typeof(BlackboardFloatThreshold), mousePos); });
                         addNodeMenu.ShowAsContext();
                         Event.current.Use();
                     }
