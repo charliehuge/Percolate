@@ -31,6 +31,18 @@ namespace DerelictComputer.DCTree
             }
         }
 
+        private void AddNode(Type type, Vector2 position)
+        {
+            var nodeWin = new NodeWindow(type, position);
+
+            if (_nodeWindows.Count == 0)
+            {
+                _rootNode = nodeWin;
+            }
+
+            _nodeWindows.Add(nodeWin);
+        }
+
         private void OnGUI()
         {
             GUILayout.BeginHorizontal();
@@ -104,20 +116,35 @@ namespace DerelictComputer.DCTree
 
             GUILayout.EndHorizontal();
 
-            if (GUILayout.Button("Add Node"))
+            var clickRect = new Rect(0, 0, position.width, position.height);
+
+            switch (Event.current.type)
             {
-                var nodeWin = new NodeWindow(typeof (FiniteRepeater), new Vector2(position.width / 2 - 200, 250));
-
-                if (_nodeWindows.Count == 0)
-                {
-                    _rootNode = nodeWin;
-                }
-
-                _nodeWindows.Add(nodeWin);
+                case EventType.ContextClick:
+                    if (clickRect.Contains(Event.current.mousePosition))
+                    {
+                        var mousePos = Event.current.mousePosition;
+                        var addNodeMenu = new GenericMenu();
+                        addNodeMenu.AddDisabledItem(new GUIContent("Add Node"));
+                        addNodeMenu.AddItem(new GUIContent("Charger"), false, () => { AddNode(typeof(Charger), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Finite Repeater"), false, () => { AddNode(typeof(FiniteRepeater), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Inverter"), false, () => { AddNode(typeof(Inverter), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Play Note"), false, () => { AddNode(typeof(PlayNote), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Repeater"), false, () => { AddNode(typeof(Repeater), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Repeat Until Failure"), false, () => { AddNode(typeof(RepeatUntilFailure), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Repeat Until Success"), false, () => { AddNode(typeof(RepeatUntilSuccess), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Selector"), false, () => { AddNode(typeof(Selector), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Sequence"), false, () => { AddNode(typeof(Sequence), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Succeeder"), false, () => { AddNode(typeof(Succeeder), mousePos); });
+                        addNodeMenu.ShowAsContext();
+                        Event.current.Use();
+                    }
+                    break;
             }
 
             if (_nodeWindows.Count == 0)
             {
+                GUILayout.Label("Right-click to select your first node");
                 return;
             }
 

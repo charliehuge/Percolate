@@ -97,7 +97,15 @@ namespace DerelictComputer.DCTree
         /// <returns></returns>
         private Node InstantiateRuntimeNode(SerializableNode sNode, Node[] children, Instrument targetInstrument)
         {
-            if (sNode.AssemblyQualifiedTypeName == "Charger")
+            Type type = Type.GetType(sNode.AssemblyQualifiedTypeName);
+
+            if (type == null)
+            {
+                Debug.LogError("No type for " + sNode.AssemblyQualifiedTypeName);
+                return null;
+            }
+
+            if (type == typeof(Charger))
             {
                 if (children.Length == 0)
                 {
@@ -107,7 +115,7 @@ namespace DerelictComputer.DCTree
 
                 return new Charger(sNode, children[0]);
             }
-            if (sNode.AssemblyQualifiedTypeName == "FiniteRepeater")
+            if (type == typeof(FiniteRepeater))
             {
                 if (children.Length == 0)
                 {
@@ -117,7 +125,7 @@ namespace DerelictComputer.DCTree
 
                 return new FiniteRepeater(sNode, children[0]);
             }
-            if (sNode.AssemblyQualifiedTypeName == "Inverter")
+            if (type == typeof(Inverter))
             {
                 if (children.Length == 0)
                 {
@@ -127,11 +135,11 @@ namespace DerelictComputer.DCTree
 
                 return new Inverter(sNode, children[0]);
             }
-            if (sNode.AssemblyQualifiedTypeName == "PlayNote")
+            if (type == typeof(PlayNote))
             {
                 return new PlayNote(sNode, targetInstrument);
             }
-            if (sNode.AssemblyQualifiedTypeName == "Repeater")
+            if (type == typeof(Repeater))
             {
                 if (children.Length == 0)
                 {
@@ -141,7 +149,7 @@ namespace DerelictComputer.DCTree
 
                 return new Repeater(sNode, children[0]);
             }
-            if (sNode.AssemblyQualifiedTypeName == "RepeatUntilFailure")
+            if (type == typeof(RepeatUntilFailure))
             {
                 if (children.Length == 0)
                 {
@@ -151,7 +159,7 @@ namespace DerelictComputer.DCTree
 
                 return new RepeatUntilFailure(sNode, children[0]);
             }
-            if (sNode.AssemblyQualifiedTypeName == "RepeatUntilSuccess")
+            if (type == typeof(RepeatUntilSuccess))
             {
                 if (children.Length == 0)
                 {
@@ -161,15 +169,15 @@ namespace DerelictComputer.DCTree
 
                 return new RepeatUntilSuccess(sNode, children[0]);
             }
-            if (sNode.AssemblyQualifiedTypeName == "Selector")
+            if (type == typeof(Selector))
             {
                 return new Selector(sNode, children);
             }
-            if (sNode.AssemblyQualifiedTypeName == "Sequence")
+            if (type == typeof(Sequence))
             {
                 return new Sequence(sNode, children);
             }
-            if (sNode.AssemblyQualifiedTypeName == "Succeeder")
+            if (type == typeof(Succeeder))
             {
                 if (children.Length == 0)
                 {

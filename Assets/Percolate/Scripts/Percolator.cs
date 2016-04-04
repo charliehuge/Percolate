@@ -9,12 +9,14 @@ namespace DerelictComputer
         [SerializeField] private Metronome _metronome;
         [SerializeField] private OneShot _oneShot;
         [SerializeField, Range(1, 8)] private int _tickDivider = 1;
+        [SerializeField] private TextAsset _dcTreeJson;
 
-        private Node _rootNode;
+        private BehaviorTree _tree;
         private int _currentTick;
 
         private void OnEnable()
         {
+            _tree = BehaviorTree.LoadForRuntime(_dcTreeJson, _oneShot);
 
             _currentTick = 0;
 
@@ -30,7 +32,7 @@ namespace DerelictComputer
         {
             if (_currentTick++ % _tickDivider == 0)
             {
-                _rootNode.Tick(tickDspTime);
+                _tree.Tick(tickDspTime);
             }
         }
     }

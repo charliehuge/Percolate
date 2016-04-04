@@ -116,6 +116,7 @@ MonoBehaviour:
   _metronome: {fileID: 1729312242}
   _oneShot: {fileID: 197212190}
   _tickDivider: 3
+  _dcTreeJson: {fileID: 4900000, guid: ab0577c80d8c68f45855f067d4d7dedc, type: 3}
 --- !u!114 &197212190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +358,7 @@ MonoBehaviour:
   _metronome: {fileID: 1729312242}
   _oneShot: {fileID: 1681598585}
   _tickDivider: 6
+  _dcTreeJson: {fileID: 4900000, guid: 21aeb985c9f99e041b91000652528b1d, type: 3}
 --- !u!114 &1681598585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,6 +535,7 @@ MonoBehaviour:
   _metronome: {fileID: 1729312242}
   _oneShot: {fileID: 1837604107}
   _tickDivider: 5
+  _dcTreeJson: {fileID: 4900000, guid: ab0577c80d8c68f45855f067d4d7dedc, type: 3}
 --- !u!1 &1922745580
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +567,7 @@ MonoBehaviour:
   _metronome: {fileID: 1729312242}
   _oneShot: {fileID: 1922745582}
   _tickDivider: 7
+  _dcTreeJson: {fileID: 4900000, guid: 21aeb985c9f99e041b91000652528b1d, type: 3}
 --- !u!114 &1922745582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,6 +655,7 @@ MonoBehaviour:
   _metronome: {fileID: 1729312242}
   _oneShot: {fileID: 2013265516}
   _tickDivider: 4
+  _dcTreeJson: {fileID: 4900000, guid: 21aeb985c9f99e041b91000652528b1d, type: 3}
 --- !u!114 &2013265516
 MonoBehaviour:
   m_ObjectHideFlags: 0
