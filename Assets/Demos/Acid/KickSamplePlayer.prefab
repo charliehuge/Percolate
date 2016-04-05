@@ -11,7 +11,7 @@ GameObject:
   - 82: {fileID: 8201856}
   - 114: {fileID: 11483938}
   m_Layer: 0
-  m_Name: DefaultSamplePlayer
+  m_Name: KickSamplePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ AudioSource:
   m_GameObject: {fileID: 197448}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300001, guid: d4cbc52b6fee864438551db4488ca080,
+  OutputAudioMixerGroup: {fileID: 24377802, guid: efc8c4bf86347e6449a047f6e10a9c38,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0

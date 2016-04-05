@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _metronome: {fileID: 1729312242}
-  _oneShot: {fileID: 197212190}
+  _instrument: {fileID: 0}
   _tickDivider: 3
   _dcTreeJson: {fileID: 4900000, guid: ab0577c80d8c68f45855f067d4d7dedc, type: 3}
   _blackboard: {fileID: 517771598}
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _metronome: {fileID: 1729312242}
-  _oneShot: {fileID: 1681598585}
+  _instrument: {fileID: 1681598585}
   _tickDivider: 2
   _dcTreeJson: {fileID: 4900000, guid: f7adb2fea5310da44a58f7ecde3b33ea, type: 3}
   _blackboard: {fileID: 517771598}
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _metronome: {fileID: 1729312242}
-  _oneShot: {fileID: 1837604107}
+  _instrument: {fileID: 0}
   _tickDivider: 5
   _dcTreeJson: {fileID: 4900000, guid: ab0577c80d8c68f45855f067d4d7dedc, type: 3}
   _blackboard: {fileID: 517771598}
@@ -618,7 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _metronome: {fileID: 1729312242}
-  _oneShot: {fileID: 1922745582}
+  _instrument: {fileID: 1922745582}
   _tickDivider: 3
   _dcTreeJson: {fileID: 4900000, guid: 15f7029b6dbfd304b8e5fddcbee52c66, type: 3}
   _blackboard: {fileID: 517771598}
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _metronome: {fileID: 1729312242}
-  _oneShot: {fileID: 2013265516}
+  _instrument: {fileID: 2013265516}
   _tickDivider: 1
   _dcTreeJson: {fileID: 4900000, guid: 1bdba549232574a40a3501787a1fdd4a, type: 3}
   _blackboard: {fileID: 517771598}
