@@ -19,6 +19,29 @@ namespace DerelictComputer
             OnPlayNote(playTime, duration, midiNote);
         }
 
-        protected abstract void OnPlayNote(double playTime, double duration, int midiNote);
+        public void ReleaseNote(double releaseTime)
+        {
+            OnReleaseNote(releaseTime, 0);
+        }
+
+        public void ReleaseNote(int midiNote)
+        {
+            OnReleaseNote(AudioSettings.dspTime, midiNote);
+        }
+
+        public void ReleaseNote(double releaseTime, int midiNote)
+        {
+            OnReleaseNote(releaseTime, midiNote);
+        }
+
+        protected virtual void OnPlayNote(double playTime, double duration, int midiNote)
+        {
+            // empty
+        }
+
+        protected virtual void OnReleaseNote(double releaseTime, int midiNote)
+        {
+            // empty
+        }
     }
 }

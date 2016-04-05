@@ -317,6 +317,9 @@ GameObject:
   - 4: {fileID: 1969134635}
   - 82: {fileID: 1969134634}
   - 114: {fileID: 1969134633}
+  - 114: {fileID: 1969134638}
+  - 114: {fileID: 1969134637}
+  - 114: {fileID: 1969134636}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -338,9 +341,18 @@ MonoBehaviour:
   _debugPlay: 0
   _debugStop: 0
   _detuneAmount: 0
-  _filterCutoff: 0
-  _filterEnvAmount: 0
-  _filterResonance: 0
+  _filterCutoff: 0.2980000078678131
+  _filterEnvAmount: 0.7289999723434448
+  _filterResonance: 0.6840000152587891
+  _filterEnvAttack: 0.16200000047683716
+  _filterEnvDecay: 0.31700000166893005
+  _filterEnvSustain: 0.40400001406669617
+  _filterEnvRelease: 0.5220000147819519
+  _volEnvAttack: 0.02199999988079071
+  _volEnvDecay: 0.6579999923706055
+  _volEnvSustain: 0
+  _volEnvRelease: 0
+  _freqSlideTime: 0
 --- !u!82 &1969134634
 AudioSource:
   m_ObjectHideFlags: 0
@@ -428,3 +440,48 @@ Transform:
   - {fileID: 587113359}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &1969134636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1969134632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22034b52976b17344a618b7295f943a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _params:
+  - Name: a
+    Type: 1
+    IntValue: 0
+    FloatValue: 0
+    StringValue: 
+--- !u!114 &1969134637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1969134632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbdaf7d18f94dc244b7c89fafc0ec500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interval: 0.125
+--- !u!114 &1969134638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1969134632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be72ddc6c0799c047b1de5c66cf2f1be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metronome: {fileID: 1969134637}
+  _instrument: {fileID: 1969134633}
+  _tickDivider: 1
+  _dcTreeJson: {fileID: 4900000, guid: afba7c38be9cb4647931386d171f0afe, type: 3}
+  _blackboard: {fileID: 1969134636}

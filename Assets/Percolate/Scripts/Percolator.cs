@@ -7,7 +7,7 @@ namespace DerelictComputer
     public class Percolator : MonoBehaviour
     {
         [SerializeField] private Metronome _metronome;
-        [SerializeField] private OneShot _oneShot;
+        [SerializeField] private Instrument _instrument;
         [SerializeField, Range(1, 8)] private int _tickDivider = 1;
         [SerializeField] private TextAsset _dcTreeJson;
         [SerializeField] private Blackboard _blackboard;
@@ -17,7 +17,7 @@ namespace DerelictComputer
 
         private void OnEnable()
         {
-            _tree = BehaviorTree.LoadForRuntime(_dcTreeJson, _oneShot, _blackboard);
+            _tree = BehaviorTree.LoadForRuntime(_dcTreeJson, _instrument, _blackboard);
 
             _currentTick = 0;
 

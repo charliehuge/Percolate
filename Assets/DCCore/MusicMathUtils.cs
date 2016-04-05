@@ -11,6 +11,8 @@ namespace DerelictComputer.DroneMachine
 
         public const double A0 = 27.5;
 
+        public const int MidiNoteA440 = 69;
+
         /// <summary>
         /// Converts a semitone offset to a percentage pitch
         /// </summary>
@@ -119,5 +121,15 @@ namespace DerelictComputer.DroneMachine
 
 	        return A0 *Math.Pow(2.0, notesFromA0/12.0);
 	    }
+
+        /// <summary>
+        /// Converts a MIDI note number to a frequency, based on A 440
+        /// </summary>
+        /// <param name="midiNote">MIDI note number to convert</param>
+        /// <returns></returns>
+        public static double MidiNoteToFrequency(int midiNote)
+        {
+            return 440f*Math.Pow(2.0, (midiNote - MidiNoteA440)/12.0);
+        }
     }
 }

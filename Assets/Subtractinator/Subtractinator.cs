@@ -7,7 +7,7 @@ using DerelictComputer.DroneMachine;
 namespace DerelictComputer.Subtractinator
 {
     [RequireComponent(typeof(AudioSource))]
-    public class Subtractinator : MonoBehaviour
+    public class Subtractinator : Instrument
     {
         [SerializeField] private bool _debugPlay;
         [SerializeField] private bool _debugStop;
@@ -15,6 +15,15 @@ namespace DerelictComputer.Subtractinator
         [SerializeField, Range(0f, 1f)] private double _filterCutoff;
         [SerializeField, Range(0f, 1f)] private double _filterEnvAmount;
         [SerializeField, Range(0f, 1f)] private double _filterResonance;
+        [SerializeField, Range(0f, 1f)] private double _filterEnvAttack;
+        [SerializeField, Range(0f, 1f)] private double _filterEnvDecay;
+        [SerializeField, Range(0f, 1f)] private double _filterEnvSustain;
+        [SerializeField, Range(0f, 1f)] private double _filterEnvRelease;
+        [SerializeField, Range(0f, 1f)] private double _volEnvAttack;
+        [SerializeField, Range(0f, 1f)] private double _volEnvDecay;
+        [SerializeField, Range(0f, 1f)] private double _volEnvSustain;
+        [SerializeField, Range(0f, 1f)] private double _volEnvRelease;
+        [SerializeField, Range(0f, 0.5f)] private double _freqSlideTime;
 
         private AudioSource _audioSource;
         private IntPtr _subPtr = IntPtr.Zero;
@@ -55,12 +64,32 @@ namespace DerelictComputer.Subtractinator
         [DllImport("SubtractinatorNative")]
         private static extern void Sub_Release(IntPtr sub, double releaseTime);
 
+        protected override void OnPlayNote(double playTime, double duration, int midiNote)
+        {
+            if (_subPtr != IntPtr.Zero)
+            {
+                Sub_SetFrequency(_subPtr, MusicMathUtils.MidiNoteToFrequency(midiNote), _freqSlideTime, _detuneAmount);
+                Sub_SetVolumeEnvelope(_subPtr, _volEnvAttack, _volEnvDecay, _volEnvSustain, _volEnvRelease);
+                Sub_SetFilterEnvelope(_subPtr, _filterEnvAttack, _filterEnvDecay, _filterEnvSustain, _filterEnvRelease);
+                Sub_Start(_subPtr, playTime);
+            }
+        }
+
+        protected override void OnReleaseNote(double releaseTime, int midiNote)
+        {
+            if (_subPtr != IntPtr.Zero)
+            {
+                Sub_Release(_subPtr, releaseTime);
+            }
+        }
+
         private void OnEnable()
         {
             _subPtr = Sub_New(1.0/AudioSettings.outputSampleRate);
             Sub_SetFrequency(_subPtr, 55, 0, _detuneAmount);
-            Sub_SetVolumeEnvelope(_subPtr, 0.5, 0.5, 0.25, 0.5);
-            Sub_SetFilterEnvelope(_subPtr, 0.5, 0.5, 0.25, 0.5);
+            Sub_SetVolumeEnvelope(_subPtr, _volEnvAttack, _volEnvDecay, _volEnvSustain, _volEnvRelease);
+            Sub_SetFilterEnvelope(_subPtr, _filterEnvAttack, _filterEnvDecay, _filterEnvSustain, _filterEnvRelease);
+
 
             // create a dummy clip and start playing it so 3d positioning works
             var dummyClip = AudioClip.Create("dummyclip", 1, 1, AudioSettings.outputSampleRate, false);

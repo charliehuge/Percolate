@@ -141,6 +141,10 @@ namespace DerelictComputer.DCTree
             {
                 return new PlayNote(sNode, targetInstrument);
             }
+            if (type == typeof (ReleaseNote))
+            {
+                return new ReleaseNote(sNode, targetInstrument);
+            }
             if (type == typeof(Repeater))
             {
                 if (children.Length == 0)
