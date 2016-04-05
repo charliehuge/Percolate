@@ -197,14 +197,14 @@ MonoBehaviour:
     ScalePitch: 0
     AttackTime: 0.12800000607967377
     SustainTime: 0
-    ReleaseTime: 2
+    ReleaseTime: 0.7229999899864197
   - Clip: {fileID: 8300000, guid: 86d0bc5d3a1170c4da7f6649b2b7a573, type: 3}
     BottomNote: 0
     TopNote: 127
     ScalePitch: 1
     AttackTime: 0
     SustainTime: 0
-    ReleaseTime: 2
+    ReleaseTime: 0.609000027179718
   _samplePlayerPrefab: {fileID: 11483938, guid: 7dc8fd166a47d5942ba9d27ace06ebda,
     type: 2}
 --- !u!114 &168239530
@@ -236,6 +236,81 @@ Transform:
   - {fileID: 140961962}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &183259208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 183259211}
+  - 114: {fileID: 183259210}
+  - 114: {fileID: 183259209}
+  m_Layer: 0
+  m_Name: Bell2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &183259209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 183259208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be72ddc6c0799c047b1de5c66cf2f1be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metronome: {fileID: 1168928268}
+  _instrument: {fileID: 183259210}
+  _tickDivider: 2
+  _dcTreeJson: {fileID: 4900000, guid: 6939a6600bfbcbf458d9e3422b9c4a3e, type: 3}
+  _blackboard: {fileID: 1333123307}
+--- !u!114 &183259210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 183259208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7241e88ab0fca224a840d9aad3a4ef4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugPlay: 0
+  DebugNote: 17
+  Samples:
+  - Clip: {fileID: 8300000, guid: f51d877f2305b8249b51bc942d62cb61, type: 3}
+    BottomNote: 0
+    TopNote: 127
+    ScalePitch: 1
+    AttackTime: 0
+    SustainTime: 1
+    ReleaseTime: 0.10000000149011612
+  - Clip: {fileID: 8300000, guid: e5bd3b83639f51f40812ecf01fb260fe, type: 3}
+    BottomNote: 0
+    TopNote: 127
+    ScalePitch: 1
+    AttackTime: 0.0430000014603138
+    SustainTime: 0.257999986410141
+    ReleaseTime: 0.6639999747276306
+  _samplePlayerPrefab: {fileID: 11483938, guid: ae4c8917d0af0874897a55e23a7259fa,
+    type: 2}
+--- !u!4 &183259211
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 183259208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.01, y: 0, z: -6.07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
 --- !u!1 &578352701
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,6 +397,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!1 &831122724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 831122727}
+  - 114: {fileID: 831122726}
+  - 114: {fileID: 831122725}
+  m_Layer: 0
+  m_Name: Bell1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &831122725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 831122724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be72ddc6c0799c047b1de5c66cf2f1be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _metronome: {fileID: 1168928268}
+  _instrument: {fileID: 831122726}
+  _tickDivider: 3
+  _dcTreeJson: {fileID: 4900000, guid: 32b5153cb52768a43ae27e98f8cbd01d, type: 3}
+  _blackboard: {fileID: 1333123307}
+--- !u!114 &831122726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 831122724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7241e88ab0fca224a840d9aad3a4ef4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugPlay: 0
+  DebugNote: 17
+  Samples:
+  - Clip: {fileID: 8300000, guid: e5bd3b83639f51f40812ecf01fb260fe, type: 3}
+    BottomNote: 0
+    TopNote: 127
+    ScalePitch: 1
+    AttackTime: 0
+    SustainTime: 1
+    ReleaseTime: 0.10000000149011612
+  - Clip: {fileID: 8300000, guid: f51d877f2305b8249b51bc942d62cb61, type: 3}
+    BottomNote: 0
+    TopNote: 127
+    ScalePitch: 1
+    AttackTime: 0.24300000071525574
+    SustainTime: 1
+    ReleaseTime: 0.10000000149011612
+  _samplePlayerPrefab: {fileID: 11483938, guid: ae4c8917d0af0874897a55e23a7259fa,
+    type: 2}
+--- !u!4 &831122727
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 831122724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.89, y: 0, z: -6.43}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
 --- !u!1 &1127556880
 GameObject:
   m_ObjectHideFlags: 0
