@@ -15,14 +15,10 @@ namespace DerelictComputer.Subtractinator
         [SerializeField, Range(0f, 1f)] private double _filterCutoff;
         [SerializeField, Range(0f, 1f)] private double _filterEnvAmount;
         [SerializeField, Range(0f, 1f)] private double _filterResonance;
-        [SerializeField, Range(0f, 0.25f)] private double _filterEnvAttack;
-        [SerializeField, Range(0f, 0.25f)] private double _filterEnvDecay;
-        [SerializeField, Range(0f, 1f)] private double _filterEnvSustain;
-        [SerializeField, Range(0f, 0.25f)] private double _filterEnvRelease;
-        [SerializeField, Range(0f, 0.25f)] private double _volEnvAttack;
-        [SerializeField, Range(0f, 0.25f)] private double _volEnvDecay;
-        [SerializeField, Range(0f, 1f)] private double _volEnvSustain;
-        [SerializeField, Range(0f, 0.25f)] private double _volEnvRelease;
+        [SerializeField, Range(0f, 0.25f)] private double _attack;
+        [SerializeField, Range(0f, 0.25f)] private double _decay;
+        [SerializeField, Range(0f, 1f)] private double _sustain;
+        [SerializeField, Range(0f, 0.25f)] private double _release;
         [SerializeField, Range(0f, 0.25f)] private double _freqSlideTime;
 
         private AudioSource _audioSource;
@@ -42,11 +38,7 @@ namespace DerelictComputer.Subtractinator
         private static extern void Sub_ProcessBuffer(IntPtr sub, [In, Out] float[] buffer, int numSamples, int numChannels, double dspTime);
 
         [DllImport("SubtractinatorNative")]
-        private static extern void Sub_SetVolumeEnvelope(IntPtr sub, double attackDuration, double decayDuration,
-            double sustainLevel, double releaseDuration);
-
-        [DllImport("SubtractinatorNative")]
-        private static extern void Sub_SetFilterEnvelope(IntPtr sub, double attackDuration, double decayDuration,
+        private static extern void Sub_SetEnvelope(IntPtr sub, double attackDuration, double decayDuration,
             double sustainLevel, double releaseDuration);
 
         [DllImport("SubtractinatorNative")]
@@ -69,8 +61,7 @@ namespace DerelictComputer.Subtractinator
             if (_subPtr != IntPtr.Zero)
             {
                 Sub_SetFrequency(_subPtr, MusicMathUtils.MidiNoteToFrequency(midiNote), _freqSlideTime, _detuneAmount);
-                Sub_SetVolumeEnvelope(_subPtr, _volEnvAttack, _volEnvDecay, _volEnvSustain, _volEnvRelease);
-                Sub_SetFilterEnvelope(_subPtr, _filterEnvAttack, _filterEnvDecay, _filterEnvSustain, _filterEnvRelease);
+                Sub_SetEnvelope(_subPtr, _attack, _decay, _sustain, _release);
                 Sub_Start(_subPtr, playTime);
             }
         }
@@ -87,8 +78,7 @@ namespace DerelictComputer.Subtractinator
         {
             _subPtr = Sub_New(1.0/AudioSettings.outputSampleRate);
             Sub_SetFrequency(_subPtr, 55, 0, _detuneAmount);
-            Sub_SetVolumeEnvelope(_subPtr, _volEnvAttack, _volEnvDecay, _volEnvSustain, _volEnvRelease);
-            Sub_SetFilterEnvelope(_subPtr, _filterEnvAttack, _filterEnvDecay, _filterEnvSustain, _filterEnvRelease);
+            Sub_SetEnvelope(_subPtr, _attack, _decay, _sustain, _release);
             Sub_SetFilterCutoffBase(_subPtr, _filterCutoff);
             Sub_SetFilterEnvelopeAmount(_subPtr, _filterEnvAmount);
             Sub_SetFilterResonance(_subPtr, _filterResonance);

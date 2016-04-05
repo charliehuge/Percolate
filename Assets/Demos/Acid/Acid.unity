@@ -230,7 +230,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 168239528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 6.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 140961962}
@@ -650,19 +650,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _debugPlay: 0
   _debugStop: 0
-  _detuneAmount: 0.07699999958276749
-  _filterCutoff: 0.07100000232458115
-  _filterEnvAmount: 0.6299999952316284
-  _filterResonance: 0.8109999895095825
-  _filterEnvAttack: 0.05490000173449516
-  _filterEnvDecay: 0.21549999713897705
-  _filterEnvSustain: 0.21299999952316284
-  _filterEnvRelease: 0.01119999960064888
-  _volEnvAttack: 0
-  _volEnvDecay: 0
-  _volEnvSustain: 1
-  _volEnvRelease: 0
-  _freqSlideTime: 0.08259999752044678
+  _detuneAmount: 0.19099999964237213
+  _filterCutoff: 0.1889999955892563
+  _filterEnvAmount: 0.42800000309944153
+  _filterResonance: 0.8920000195503235
+  _attack: 0
+  _decay: 0.09679999947547913
+  _sustain: 0.20200000703334808
+  _release: 0.05139999836683273
+  _freqSlideTime: 0.12200000137090683
 --- !u!82 &1656657744
 AudioSource:
   m_ObjectHideFlags: 0
