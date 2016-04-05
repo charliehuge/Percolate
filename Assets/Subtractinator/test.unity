@@ -341,15 +341,15 @@ MonoBehaviour:
   _debugPlay: 0
   _debugStop: 0
   _detuneAmount: 0
-  _filterCutoff: 0.2980000078678131
-  _filterEnvAmount: 0.7289999723434448
-  _filterResonance: 0.6840000152587891
-  _filterEnvAttack: 0.16200000047683716
-  _filterEnvDecay: 0.31700000166893005
-  _filterEnvSustain: 0.40400001406669617
-  _filterEnvRelease: 0.5220000147819519
-  _volEnvAttack: 0.02199999988079071
-  _volEnvDecay: 0.6579999923706055
+  _filterCutoff: 0.02199999988079071
+  _filterEnvAmount: 0.8939999938011169
+  _filterResonance: 1
+  _filterEnvAttack: 0.03999999910593033
+  _filterEnvDecay: 0.02500000037252903
+  _filterEnvSustain: 0
+  _filterEnvRelease: 0
+  _volEnvAttack: 0
+  _volEnvDecay: 0.49900001287460327
   _volEnvSustain: 0
   _volEnvRelease: 0
   _freqSlideTime: 0

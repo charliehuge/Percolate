@@ -15,15 +15,15 @@ namespace DerelictComputer.Subtractinator
         [SerializeField, Range(0f, 1f)] private double _filterCutoff;
         [SerializeField, Range(0f, 1f)] private double _filterEnvAmount;
         [SerializeField, Range(0f, 1f)] private double _filterResonance;
-        [SerializeField, Range(0f, 1f)] private double _filterEnvAttack;
-        [SerializeField, Range(0f, 1f)] private double _filterEnvDecay;
+        [SerializeField, Range(0f, 0.25f)] private double _filterEnvAttack;
+        [SerializeField, Range(0f, 0.25f)] private double _filterEnvDecay;
         [SerializeField, Range(0f, 1f)] private double _filterEnvSustain;
-        [SerializeField, Range(0f, 1f)] private double _filterEnvRelease;
-        [SerializeField, Range(0f, 1f)] private double _volEnvAttack;
-        [SerializeField, Range(0f, 1f)] private double _volEnvDecay;
+        [SerializeField, Range(0f, 0.25f)] private double _filterEnvRelease;
+        [SerializeField, Range(0f, 0.25f)] private double _volEnvAttack;
+        [SerializeField, Range(0f, 0.25f)] private double _volEnvDecay;
         [SerializeField, Range(0f, 1f)] private double _volEnvSustain;
-        [SerializeField, Range(0f, 1f)] private double _volEnvRelease;
-        [SerializeField, Range(0f, 0.5f)] private double _freqSlideTime;
+        [SerializeField, Range(0f, 0.25f)] private double _volEnvRelease;
+        [SerializeField, Range(0f, 0.25f)] private double _freqSlideTime;
 
         private AudioSource _audioSource;
         private IntPtr _subPtr = IntPtr.Zero;
@@ -89,6 +89,9 @@ namespace DerelictComputer.Subtractinator
             Sub_SetFrequency(_subPtr, 55, 0, _detuneAmount);
             Sub_SetVolumeEnvelope(_subPtr, _volEnvAttack, _volEnvDecay, _volEnvSustain, _volEnvRelease);
             Sub_SetFilterEnvelope(_subPtr, _filterEnvAttack, _filterEnvDecay, _filterEnvSustain, _filterEnvRelease);
+            Sub_SetFilterCutoffBase(_subPtr, _filterCutoff);
+            Sub_SetFilterEnvelopeAmount(_subPtr, _filterEnvAmount);
+            Sub_SetFilterResonance(_subPtr, _filterResonance);
 
 
             // create a dummy clip and start playing it so 3d positioning works
