@@ -137,6 +137,14 @@ namespace DerelictComputer.DCTree
 
                 return new Inverter(sNode, children[0]);
             }
+            if (type == typeof(ModSequence))
+            {
+                return new ModSequence(sNode, children);
+            }
+            if (type == typeof(NullNode))
+            {
+                return new NullNode(sNode);
+            }
             if (type == typeof(PlayNote))
             {
                 return new PlayNote(sNode, targetInstrument);

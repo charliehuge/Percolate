@@ -154,6 +154,8 @@ namespace DerelictComputer.DCTree
                         addNodeMenu.AddItem(new GUIContent("Charger"), false, () => { AddNode(typeof(Charger), mousePos); });
                         addNodeMenu.AddItem(new GUIContent("Finite Repeater"), false, () => { AddNode(typeof(FiniteRepeater), mousePos); });
                         addNodeMenu.AddItem(new GUIContent("Inverter"), false, () => { AddNode(typeof(Inverter), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Mod sequence"), false, () => { AddNode(typeof(ModSequence), mousePos); });
+                        addNodeMenu.AddItem(new GUIContent("Null"), false, () => { AddNode(typeof(NullNode), mousePos); });
                         addNodeMenu.AddItem(new GUIContent("Play Note"), false, () => { AddNode(typeof(PlayNote), mousePos); });
                         addNodeMenu.AddItem(new GUIContent("Release Note"), false, () => { AddNode(typeof(ReleaseNote), mousePos); });
                         addNodeMenu.AddItem(new GUIContent("Repeater"), false, () => { AddNode(typeof(Repeater), mousePos); });

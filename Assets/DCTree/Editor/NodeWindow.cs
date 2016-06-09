@@ -5,7 +5,7 @@ namespace DerelictComputer.DCTree
 {
     public class NodeWindow
     {
-        private static readonly Vector2 WindowSize = new Vector2(300, 80);
+        private static readonly Vector2 WindowSize = new Vector2(150, 60);
         private static int _nextId;
 
         public readonly EditorNode EditorNode;
